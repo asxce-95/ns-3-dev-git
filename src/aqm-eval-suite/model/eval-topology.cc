@@ -21,7 +21,6 @@
  */
 
 #include "eval-topology.h"
-#include "eval-ts.h"
 
 namespace ns3 {
 
@@ -148,9 +147,6 @@ EvaluationTopology::DestroyConnection ()
 void
 EvaluationTopology::PacketEnqueue (Ptr<const QueueDiscItem> item)
 {
-  Ptr<Packet> p = item->GetPacket ();
-  EvalTimestampTag tag;
-  p->AddPacketTag (tag);
   Ptr<const Ipv4QueueDiscItem> iqdi = Ptr<const Ipv4QueueDiscItem> (dynamic_cast<const Ipv4QueueDiscItem *> (PeekPointer (item)));
   *m_enqueueTime->GetStream () << (iqdi->GetHeader ()).GetDestination ()
                                << " "
@@ -161,10 +157,7 @@ EvaluationTopology::PacketEnqueue (Ptr<const QueueDiscItem> item)
 void
 EvaluationTopology::PacketDequeue (Ptr<const QueueDiscItem> item)
 {
-  Ptr<Packet> p = item->GetPacket ();
-  EvalTimestampTag tag;
-  p->RemovePacketTag (tag);
-  Time delta = Simulator::Now () - tag.GetTxTime ();
+  Time delta = Simulator::Now () - item->GetTimeStamp ();
   if (m_lastQDrecord == Time::Min () || Simulator::Now () - m_lastQDrecord > MilliSeconds (10))
     {
       m_lastQDrecord = Simulator::Now ();
