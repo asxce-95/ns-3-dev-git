@@ -10,16 +10,22 @@ def build(bld):
     module = bld.create_ns3_module('aqm-eval-suite', ['core', 'network', 'internet'])
     module.source = [
         'model/eval-topology.cc',
+        'model/eval-topology-bulk.cc',
         'model/eval-app.cc',
+        'model/eval-bulk-app.cc',
         'helper/aqm-eval-suite-helper.cc',
+        'helper/aqm-eval-suite-helperb.cc',
         ]
 
     headers = bld(features='ns3header')
     headers.module = 'aqm-eval-suite'
     headers.source = [
         'model/eval-topology.h',
+        'model/eval-topology-bulk.h',
         'model/eval-app.h',
+        'model/eval-bulk-app.h',
         'helper/aqm-eval-suite-helper.h',
+        'helper/aqm-eval-suite-helperb.h',
         ]
 
     if bld.env.ENABLE_EXAMPLES:
