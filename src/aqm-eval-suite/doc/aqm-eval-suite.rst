@@ -69,12 +69,6 @@ primary classes:
   :cpp:class:`OnOffApplication`: in which a socket is created and the application
   is started only after its parameters are configured.
 
-* class :cpp:class:`EvalTimestampTag`: This is a subclass of :cpp:class:`Tag`: and
-  has been developed to fetch the queue delay information from :cpp:class:`QueueDisc`:.
-  When a packet is enqueued by the QueueDisc, this tag is added with a timestamp
-  (as the enqueue time) and when the packet is dequeued, the queue delay is computed
-  as the difference between the dequeue time and the enqueue time.
-
 Helper
 ======
 
